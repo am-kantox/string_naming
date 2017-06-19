@@ -29,39 +29,41 @@ defmodule String.Naming do
   @moduledoc false
 
   ~S"""
-  ; blah
-  @@@ blah
   0021	EXCLAMATION MARK
   	= factorial
   	= bang
   	x (inverted exclamation mark - 00A1)
   	x (latin letter retroflex click - 01C3)
-  	x (double exclamation mark - 203C)
-  	x (interrobang - 203D)
-  	x (heavy exclamation mark ornament - 2762)
   """
 
   data_path = Path.join([__DIR__, "string_naming", "unicode", "NamesList.txt"])
 
   extract_prop = fn
-    rest, [_names, _codes] = acc ->
-      IO.inspect rest, label: "★ property"
+    _rest, [_category, _names, _props] = acc ->
+      # IO.inspect rest, label: "★ property"
       acc
   end
+  underscore = fn name ->
+    name
+    |> String.trim
+    |> String.replace(~r/\A(\d)/, "N_\\1")
+    |> String.replace(~r/[^A-Za-z\d_ ]/, " ")
+    |> String.split(" ")
+    |> Enum.filter(& &1 != "")
+    |> Enum.join("_")
+    |> Macro.underscore()
+  end
+  # camelize = fn name -> Macro.camelize(underscore.(name)) end
   extract_name = fn
-    _, <<"<" :: binary, _ :: binary>>, [_names, _codes] = acc -> acc
-    code, name, [names, codes] ->
-      fun_name = name
-                 |> String.trim()
-                 |> String.split([" ", "-"])
-                 |> Enum.map(&Macro.underscore/1)
-                 |> Enum.join("_")
-                 |> String.to_atom()
-      [[{code, fun_name} | names], codes]
+    _, <<"<" :: binary, _ :: binary>>, [_category, _names, _props] = acc -> acc
+    code, name, [category, names, props] ->
+      [category, [{code, underscore.(name), category} | names], props]
   end
 
-  [names, _props] = Enum.reduce File.stream!(data_path), [[], %{}], fn
+  [_category, names, _props] = Enum.reduce File.stream!(data_path), ["Unknown", [], %{}], fn
     <<";" :: binary, _ :: binary>>, acc -> acc
+    <<"@\t" :: binary, category :: binary>>, [_, names, props] ->
+      [underscore.(category), names, props]
     <<"@" :: binary, _ :: binary>>, acc -> acc
     <<"\t" :: binary, rest :: binary>>, acc -> extract_prop.(rest, acc)
     code_name, acc ->
@@ -71,12 +73,8 @@ defmodule String.Naming do
   end
 
   # "★ A71F :: modifier_letter_low_inverted_exclamation_mark"
-  names_tree = Enum.reduce(Enum.take(names, 1500), %{}, fn {code, name}, acc ->
-    modules = name
-              |> Atom.to_string()
-              |> String.split("_")
-              |> Enum.map(&Macro.camelize/1)
-
+  names_tree = Enum.reduce(names, %{}, fn {code, name, category}, acc ->
+    modules = [category | String.split(name, "_")] |> Enum.map(&Macro.camelize/1)
     {acc, ^modules} = Enum.reduce(modules, {acc, []}, fn
       key, {acc, keys} ->
         keys = :lists.reverse([key | :lists.reverse(keys)])
