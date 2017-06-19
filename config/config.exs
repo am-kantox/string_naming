@@ -123,7 +123,7 @@ config :string_naming, categories:
 
       #ArrowTails
       #Arrowheads
-      Arrows
+      #Arrows
       #ArrowsCombinedWithOperators
       #ArrowsCombinedWithRelations
       #ArrowsWithBentTips
@@ -159,7 +159,7 @@ config :string_naming, categories:
       #BasicRussianAlphabet
       #BasicSyllables
       #BeamsAndSlurs
-      BeverageAndFoodSymbols
+      =BeverageAndFoodSymbols
       =BeverageSymbols
       =BiblicalEditorialSymbol
 
@@ -240,7 +240,7 @@ config :string_naming, categories:
       CircledLatinLetters
       CircledNumbers
       #CircledNumbersOnBlackSquaresFromAribStdB24
-      CircledSansSerifDigits
+      #CircledSansSerifDigits
       #Circles
 
       #CjkAngleBrackets
@@ -253,7 +253,7 @@ config :string_naming, categories:
       #ClaudianLetters
       #Clef
       #Clefs
-      ClockFaceSymbols
+      =ClockFaceSymbols
       ClothingAndAccessories
       =ClubsOrWands
       #Codas
@@ -449,7 +449,7 @@ config :string_naming, categories:
       #FiveStrokeComponents
       #Fives
       #FixedFormSubjoinedConsonants
-      FlagSymbols
+      #FlagSymbols
       Flags
       =Fleurons
       =FlowerTiles
@@ -702,8 +702,8 @@ config :string_naming, categories:
       =Marks
       =MarksAndSigns
       =MarksOfNasalization
-      MathematicalArrows
-      MathematicalBrackets
+      #MathematicalArrows
+      #MathematicalBrackets
       #MathematicalOperator
       #MathematicalOperators
       #MayanistAdditions
@@ -721,7 +721,7 @@ config :string_naming, categories:
       #MensuralProlations
       #MensuralRests
       =Metals
-      MetricalSymbols
+      =MetricalSymbols
       #Micr
       #MinorFractions
 
@@ -1179,7 +1179,7 @@ config :string_naming, categories:
       #VerticalLineOperator
       #VerticalLineOperators
       #VerticalTiles
-      Vessels
+      #Vessels
       #VietnameseToneMarks
       #Virama
       #Viramas

@@ -6,7 +6,7 @@ defmodule String.Naming.H do
     end)
     defmodule Module.concat(mod) do
       Enum.each(funs, fn {name, value} ->
-        name = name |> Macro.underscore |> String.to_atom
+        name = name |> String.replace(~r/\A(\d)/, "N_\\1") |> Macro.underscore |> String.to_atom
         ast = quote do: def unquote(name)(), do: <<String.to_integer(unquote(value), 16)::utf8>>
         Code.eval_quoted(ast, [name: name, value: value], __ENV__)
       end)
