@@ -1,33 +1,25 @@
-to_binary = fn
-  "" ->
-    nil
-  codepoints ->
-    codepoints
-    |> :binary.split(" ", [:global])
-    |> Enum.map(&<<String.to_integer(&1, 16)::utf8>>)
-    |> IO.iodata_to_binary
-end
-
 defmodule String.Naming.H do
-  def nested_module(mod, v) do
+  def nested_module(mod, children) do
+    [funs, mods] = Enum.reduce(children, [%{}, %{}], fn
+      {k, v}, [funs, mods] when is_binary(v) -> [Map.put(funs, k, v), mods]
+      {k, v}, [funs, mods] -> [funs, Map.put(mods, k, v)]
+    end)
     defmodule Module.concat(mod) do
-      case v do
-        %{code: code} ->
-          @code code
-          def sym, do: <<String.to_integer(@code, 16)::utf8>>
-        _ -> String.Naming.H.nesteds(mod, v)
-      end
+      Enum.each(funs, fn {name, value} ->
+        name = name |> Macro.underscore |> String.to_atom
+        ast = quote do: def unquote(name)(), do: <<String.to_integer(unquote(value), 16)::utf8>>
+        Code.eval_quoted(ast, [name: name, value: value], __ENV__)
+      end)
+      String.Naming.H.nesteds(mod, mods)
     end
   end
 
   def nesteds(nested \\ [], map_or_code)
   def nesteds(nested, %{} = map) do
     Enum.each(map, fn
-      {:code, value} ->
-        String.Naming.H.nested_method(value)
+      {_key, code} when is_binary(code) -> :ok
       {k, v} ->
         mod = :lists.reverse([k | :lists.reverse(nested)])
-        IO.inspect mod, label: "★ module"
         String.Naming.H.nested_module(mod, v)
     end)
   end
@@ -79,7 +71,7 @@ defmodule String.Naming do
   end
 
   # "★ A71F :: modifier_letter_low_inverted_exclamation_mark"
-  names_tree = Enum.reduce(Enum.take(names, 5000), %{}, fn {code, name}, acc ->
+  names_tree = Enum.reduce(Enum.take(names, 1500), %{}, fn {code, name}, acc ->
     modules = name
               |> Atom.to_string()
               |> String.split("_")
@@ -91,10 +83,11 @@ defmodule String.Naming do
         {_, result} = get_and_update_in(acc, keys, fn
           nil -> {nil, %{}}
           map when is_map(map) -> {map, map}
+          other -> {other, %{}}
         end)
         {result, keys}
     end)
-    put_in(acc, modules, %{code: code})
+    put_in(acc, modules, code)
   end)
 
   String.Naming.H.nesteds(["String", "Naming"], names_tree)
