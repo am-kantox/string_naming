@@ -10,6 +10,16 @@ defmodule String.Naming.H do
         ast = quote do: def unquote(name)(), do: <<String.to_integer(unquote(value), 16)::utf8>>
         Code.eval_quoted(ast, [name: name, value: value], __ENV__)
       end)
+      def __all__ do
+        :functions
+        |> __MODULE__.__info__()
+        |> Enum.map(fn
+            {:__all__, 0} -> nil
+            {k, 0} -> {k, apply(__MODULE__, k, [])}
+            _ -> nil
+        end)
+        |> Enum.filter(& &1)
+      end
       String.Naming.H.nesteds(mod, mods)
     end
   end
@@ -27,6 +37,8 @@ end
 
 defmodule String.Naming do
   @moduledoc false
+
+  @categories Application.get_env(:string_naming, :categories)
 
   ~S"""
   0021	EXCLAMATION MARK
@@ -53,7 +65,13 @@ defmodule String.Naming do
     |> Enum.join("_")
     |> Macro.underscore()
   end
-  # camelize = fn name -> Macro.camelize(underscore.(name)) end
+  @selected @categories
+            |> Enum.filter(fn
+                  <<"#" :: binary, _ :: binary>> -> false
+                  <<"=" :: binary, _ :: binary>> -> false
+                  _ -> true
+               end)
+            |> Enum.map(& underscore.(&1))
   extract_name = fn
     _, <<"<" :: binary, _ :: binary>>, [_category, _names, _props] = acc -> acc
     code, name, [category, names, props] ->
@@ -63,16 +81,21 @@ defmodule String.Naming do
   [_category, names, _props] = Enum.reduce File.stream!(data_path), ["Unknown", [], %{}], fn
     <<";" :: binary, _ :: binary>>, acc -> acc
     <<"@\t" :: binary, category :: binary>>, [_, names, props] ->
-      [underscore.(category), names, props]
+      category = underscore.(category)
+      category = if Enum.member?(@selected, category), do: category, else: ""
+      [category, names, props]
     <<"@" :: binary, _ :: binary>>, acc -> acc
     <<"\t" :: binary, rest :: binary>>, acc -> extract_prop.(rest, acc)
-    code_name, acc ->
-      with [code, name] <- :binary.split(code_name, "\t") do
-        extract_name.(code, name, acc)
+    code_name, [category, _, _] = acc ->
+      if "" == category do
+        acc
+      else
+        with [code, name] <- :binary.split(code_name, "\t") do
+          extract_name.(code, name, acc)
+        end
       end
   end
 
-  # "★ A71F :: modifier_letter_low_inverted_exclamation_mark"
   names_tree = Enum.reduce(names, %{}, fn {code, name, category}, acc ->
     modules = [category | String.split(name, "_")] |> Enum.map(&Macro.camelize/1)
     {acc, ^modules} = Enum.reduce(modules, {acc, []}, fn
@@ -99,3 +122,6 @@ defmodule String.Naming do
   #end
 
 end
+
+:code.delete String.Naming.H
+:code.purge String.Naming.H
