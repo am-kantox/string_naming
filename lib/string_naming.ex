@@ -40,6 +40,8 @@ defmodule String.Naming do
 
   @categories Application.get_env(:string_naming, :categories)
 
+  data_path = Path.join([__DIR__, "string_naming", "unicode", "NamesList.txt"])
+
   ~S"""
   0021	EXCLAMATION MARK
   	= factorial
@@ -47,11 +49,9 @@ defmodule String.Naming do
   	x (inverted exclamation mark - 00A1)
   	x (latin letter retroflex click - 01C3)
   """
-
-  data_path = Path.join([__DIR__, "string_naming", "unicode", "NamesList.txt"])
-
   extract_prop = fn
     _rest, [_category, _names, _props] = acc ->
+      # TODO make properties available as well
       # IO.inspect rest, label: "★ property"
       acc
   end
@@ -112,14 +112,6 @@ defmodule String.Naming do
   end)
 
   String.Naming.H.nesteds(["String", "Naming"], names_tree)
-
-
-  #for {code, name} <- names do
-  #  IO.inspect "★ #{code} :: #{name}"
-  #  def unquote(name)() do
-  #    <<String.to_integer(unquote(code), 16)::utf8>>
-  #  end
-  #end
 
 end
 
