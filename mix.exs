@@ -1,27 +1,38 @@
 defmodule StringNaming.Mixfile do
   use Mix.Project
 
+  @application :string_naming
+
   def project do
     [
-      app: :string_naming,
+      app: @application,
       version: "0.2.0",
       elixir: "~> 1.4",
       start_permanent: Mix.env == :prod,
+      description: description(),
+      package: package(),
       deps: deps()
     ]
   end
 
-  # Run "mix help compile.app" to learn about applications.
-  def application do
-    [
-      extra_applications: [:logger]
-    ]
+  def application, do: []
+
+  defp deps, do: []
+
+  defp description do
+    """
+    Compile-time generated set of modules to ease an access to a predefined subset of UTF8 symbols.
+    """
   end
 
-  # Run "mix help deps" to learn about dependencies.
-  defp deps do
+  defp package do
     [
-      # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"},
-    ]
+     name: @application,
+     files: ~w|lib mix.exs README.md|,
+     maintainers: ["Aleksei Matiushkin"],
+     licenses: ["MIT"],
+     links: %{"GitHub" => "https://github.com/am-kantox/#{@application}",
+              "Docs" => "https://hexdocs.pm/#{@application}"}]
   end
+
 end
