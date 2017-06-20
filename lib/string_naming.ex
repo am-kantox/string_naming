@@ -36,7 +36,24 @@ defmodule String.Naming.H do
 end
 
 defmodule String.Naming do
-  @moduledoc false
+  @moduledoc ~S"""
+  The sibling of [`String.Casing`](https://github.com/elixir-lang/elixir/blob/9873e4239f063e044e5d6602e173ebee4f32391d/lib/elixir/unicode/properties.ex#L57),
+    `String.Break` and `String.Normalizer` from Elixir core.
+
+  It parses the [`NamesList.txt`](http://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt) file provided by Consortium, building
+    the set of nested modules under `String.Naming`. Each nested module is granted with `__all__/0` function that returns all the
+    available symbols in that particular namespace, as well as with methods returning a symbol by it’s name.
+
+  ## Examples
+
+      iex> String.Naming.AnimalSymbols.monkey
+      "🐒"
+      iex> String.Naming.FrakturSymbols.Mathematical.Fraktur.Capital.__all__
+      [a: "𝔄", b: "𝔅", d: "𝔇", e: "𝔈", f: "𝔉", g: "𝔊", j: "𝔍",
+       k: "𝔎", l: "𝔏", m: "𝔐", n: "𝔑", o: "𝔒", p: "𝔓", q: "𝔔",
+       s: "𝔖", t: "𝔗", u: "𝔘", v: "𝔙", w: "𝔚", x: "𝔛", y: "𝔜"]
+
+  """
 
   @categories Application.get_env(:string_naming, :categories)
 
