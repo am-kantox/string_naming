@@ -6,7 +6,7 @@
 
 ```elixir
 def deps do
-  [{:string_naming, "~> 0.1"}]
+  [{:string_naming, "~> 0.3"}]
 end
 ```
 
