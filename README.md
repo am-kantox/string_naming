@@ -1,4 +1,4 @@
-# String.Naming
+# StringNaming
 
 **Compile-time generated set of modules to ease an access to a predefined subset of UTF8 symbols.**
 
@@ -25,12 +25,12 @@ Basically, leading `'#'` and `'='` in front of group names are treated as commen
 ## How it works
 
 The code parses the [`NamesList.txt`](http://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt)
-file provided by Consortium. It builds the set of nested modules under `String.Naming`.
+file provided by Consortium. It builds the set of nested modules under `StringNaming`.
 Each nested module is granted with `__all__/0` function that returns all the
 available symbols in that particular namespace.
 
 ```elixir
-iex|1 ▶ String.Naming.AnimalSymbols.__all__
+iex|1 ▶ StringNaming.AnimalSymbols.__all__
 [ant: "🐜", bat: "🦇", bird: "🐦", blowfish: "🐡", boar: "🐗",
  bug: "🐛", butterfly: "🦋", cat: "🐈", chicken: "🐔", chipmunk: "🐿",
  cow: "🐄", crab: "🦀", crocodile: "🐊", deer: "🦌", dog: "🐕",
@@ -42,7 +42,7 @@ iex|1 ▶ String.Naming.AnimalSymbols.__all__
  rooster: "🐓", scorpion: "🦂", shark: "🦈", sheep: "🐑",
  shrimp: "🦐", snail: "🐌", snake: "🐍", spider: "🕷", squid: "🦑",
  tiger: "🐅", ...]
-iex|2 ▶ String.Naming.AnimalSymbols.monkey
+iex|2 ▶ StringNaming.AnimalSymbols.monkey
 "🐒"
 ```
 

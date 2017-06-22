@@ -1,4 +1,4 @@
-defmodule String.Naming.H do
+defmodule StringNaming.H do
   def nested_module(mod, children) do
     [funs, mods] = Enum.reduce(children, [%{}, %{}], fn
       {k, v}, [funs, mods] when is_binary(v) -> [Map.put(funs, k, v), mods]
@@ -20,7 +20,7 @@ defmodule String.Naming.H do
         end)
         |> Enum.filter(& &1)
       end
-      String.Naming.H.nesteds(mod, mods)
+      StringNaming.H.nesteds(mod, mods)
     end
   end
 
@@ -30,25 +30,25 @@ defmodule String.Naming.H do
       {_key, code} when is_binary(code) -> :ok
       {k, v} ->
         mod = :lists.reverse([k | :lists.reverse(nested)])
-        String.Naming.H.nested_module(mod, v)
+        StringNaming.H.nested_module(mod, v)
     end)
   end
 end
 
-defmodule String.Naming do
+defmodule StringNaming do
   @moduledoc ~S"""
   The sibling of [`String.Casing`](https://github.com/elixir-lang/elixir/blob/9873e4239f063e044e5d6602e173ebee4f32391d/lib/elixir/unicode/properties.ex#L57),
     `String.Break` and `String.Normalizer` from Elixir core.
 
   It parses the [`NamesList.txt`](http://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt) file provided by Consortium, building
-    the set of nested modules under `String.Naming`. Each nested module is granted with `__all__/0` function that returns all the
+    the set of nested modules under `StringNaming`. Each nested module is granted with `__all__/0` function that returns all the
     available symbols in that particular namespace, as well as with methods returning a symbol by it’s name.
 
   ## Examples
 
-      iex> String.Naming.AnimalSymbols.monkey
+      iex> StringNaming.AnimalSymbols.monkey
       "🐒"
-      iex> String.Naming.FrakturSymbols.Mathematical.Fraktur.Capital.__all__
+      iex> StringNaming.FrakturSymbols.Mathematical.Fraktur.Capital.__all__
       [a: "𝔄", b: "𝔅", d: "𝔇", e: "𝔈", f: "𝔉", g: "𝔊", j: "𝔍",
        k: "𝔎", l: "𝔏", m: "𝔐", n: "𝔑", o: "𝔒", p: "𝔓", q: "𝔔",
        s: "𝔖", t: "𝔗", u: "𝔘", v: "𝔙", w: "𝔚", x: "𝔛", y: "𝔜"]
@@ -128,9 +128,9 @@ defmodule String.Naming do
     put_in(acc, modules, code)
   end)
 
-  String.Naming.H.nesteds(["String", "Naming"], names_tree)
+  StringNaming.H.nesteds(["StringNaming"], names_tree)
 
 end
 
-:code.delete String.Naming.H
-:code.purge String.Naming.H
+:code.delete StringNaming.H
+:code.purge StringNaming.H

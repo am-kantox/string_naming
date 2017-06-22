@@ -1,4 +1,4 @@
-defmodule String.Naming.Test do
+defmodule StringNaming.Test do
   use ExUnit.Case
-  doctest String.Naming
+  doctest StringNaming
 end
