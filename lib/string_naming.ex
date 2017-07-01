@@ -4,24 +4,27 @@ defmodule StringNaming.H do
       {k, v}, [funs, mods] when is_binary(v) -> [Map.put(funs, k, v), mods]
       {k, v}, [funs, mods] -> [funs, Map.put(mods, k, v)]
     end)
-    defmodule Module.concat(mod) do
-      Enum.each(funs, fn {name, value} ->
-        name = name |> String.replace(~r/\A(\d)/, "N_\\1") |> Macro.underscore |> String.to_atom
-        ast = quote do: def unquote(name)(), do: <<String.to_integer(unquote(value), 16)::utf8>>
-        Code.eval_quoted(ast, [name: name, value: value], __ENV__)
-      end)
-      def __all__ do
-        :functions
-        |> __MODULE__.__info__()
-        |> Enum.map(fn
-            {:__all__, 0} -> nil
-            {k, 0} -> {k, apply(__MODULE__, k, [])}
-            _ -> nil
-        end)
-        |> Enum.filter(& &1)
+
+    ast = for {name, value} <- funs do
+      name = name |> String.replace(~r/\A(\d)/, "N_\\1") |> Macro.underscore |> String.to_atom
+      quote do: def unquote(name)(), do: <<String.to_integer(unquote(value), 16)::utf8>>
+    end ++
+    [
+      quote do
+        def __all__ do
+          :functions
+          |> __MODULE__.__info__()
+          |> Enum.map(fn
+              {:__all__, 0} -> nil
+              {k, 0} -> {k, apply(__MODULE__, k, [])}
+              _ -> nil
+          end)
+          |> Enum.filter(& &1)
+        end
       end
-      StringNaming.H.nesteds(mod, mods)
-    end
+    ]
+    Module.create(Module.concat(mod), ast, Macro.Env.location(__ENV__))
+    StringNaming.H.nesteds(mod, mods)
   end
 
   def nesteds(nested \\ [], map_or_code)

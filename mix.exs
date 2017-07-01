@@ -6,7 +6,7 @@ defmodule StringNaming.Mixfile do
   def project do
     [
       app: @application,
-      version: "0.3.0",
+      version: "0.4.0",
       elixir: "~> 1.4",
       start_permanent: Mix.env == :prod,
       description: description(),
