@@ -133,6 +133,107 @@ defmodule StringNaming do
 
   StringNaming.H.nesteds(["StringNaming"], names_tree)
 
+  @doc ~S"""
+  Returns graphemes for modules that have names matching the regular expression given as a parameter.
+  The response is a plain keyword list with names taken from concatenated nested module names.
+
+  ## Examples
+
+      iex> StringNaming.graphemes ~r/AnimalFace/
+      [
+        animalfaces_bear_face: "🐻",
+        animalfaces_cat_face: "🐱",
+        animalfaces_cow_face: "🐮",
+        animalfaces_dog_face: "🐶",
+        animalfaces_dragon_face: "🐲",
+        animalfaces_frog_face: "🐸",
+        animalfaces_hamster_face: "🐹",
+        animalfaces_horse_face: "🐴",
+        animalfaces_monkey_face: "🐵",
+        animalfaces_mouse_face: "🐭",
+        animalfaces_panda_face: "🐼",
+        animalfaces_pig_face: "🐷",
+        animalfaces_pig_nose: "🐽",
+        animalfaces_rabbit_face: "🐰",
+        animalfaces_spouting_whale: "🐳",
+        animalfaces_tiger_face: "🐯",
+        animalfaces_wolf_face: "🐺"
+      ]
+
+      iex> StringNaming.graphemes ~r/fraktur.small/i
+      [
+        fraktursymbols_mathematical_fraktur_small_a: "𝔞",
+        fraktursymbols_mathematical_fraktur_small_b: "𝔟",
+        fraktursymbols_mathematical_fraktur_small_c: "𝔠",
+        fraktursymbols_mathematical_fraktur_small_d: "𝔡",
+        fraktursymbols_mathematical_fraktur_small_e: "𝔢",
+        fraktursymbols_mathematical_fraktur_small_f: "𝔣",
+        fraktursymbols_mathematical_fraktur_small_g: "𝔤",
+        fraktursymbols_mathematical_fraktur_small_h: "𝔥",
+        fraktursymbols_mathematical_fraktur_small_i: "𝔦",
+        fraktursymbols_mathematical_fraktur_small_j: "𝔧",
+        fraktursymbols_mathematical_fraktur_small_k: "𝔨",
+        fraktursymbols_mathematical_fraktur_small_l: "𝔩",
+        fraktursymbols_mathematical_fraktur_small_m: "𝔪",
+        fraktursymbols_mathematical_fraktur_small_n: "𝔫",
+        fraktursymbols_mathematical_fraktur_small_o: "𝔬",
+        fraktursymbols_mathematical_fraktur_small_p: "𝔭",
+        fraktursymbols_mathematical_fraktur_small_q: "𝔮",
+        fraktursymbols_mathematical_fraktur_small_r: "𝔯",
+        fraktursymbols_mathematical_fraktur_small_s: "𝔰",
+        fraktursymbols_mathematical_fraktur_small_t: "𝔱",
+        fraktursymbols_mathematical_fraktur_small_u: "𝔲",
+        fraktursymbols_mathematical_fraktur_small_v: "𝔳",
+        fraktursymbols_mathematical_fraktur_small_w: "𝔴",
+        fraktursymbols_mathematical_fraktur_small_x: "𝔵",
+        fraktursymbols_mathematical_fraktur_small_y: "𝔶",
+        fraktursymbols_mathematical_fraktur_small_z: "𝔷"
+      ]
+
+      iex> StringNaming.graphemes ~r/\Aspace/i
+      [
+        space_medium_mathematical_space: " ",
+        spaces_em_quad: " ",
+        spaces_em_space: " ",
+        spaces_en_quad: " ",
+        spaces_en_space: " ",
+        spaces_figure_space: " ",
+        spaces_four_per_em_space: " ",
+        spaces_hair_space: " ",
+        spaces_punctuation_space: " ",
+        spaces_six_per_em_space: " ",
+        spaces_thin_space: " ",
+        spaces_three_per_em_space: " "
+      ]
+
+
+  """
+  def graphemes(%Regex{} = filter) do
+    with {:ok, modules} <- :application.get_key(:string_naming, :modules) do
+      modules
+      |> Enum.filter(fn m ->
+        case to_string(m) do
+          <<"Elixir.StringNaming." :: binary, name :: binary>> -> Regex.match?(filter, name)
+          _ -> false
+        end
+      end)
+      |> Enum.flat_map(fn m ->
+        m
+        |> apply(:__all__, [])
+        |> Enum.map(fn {k, v} ->
+          <<"Elixir.StringNaming." :: binary, name :: binary>> = to_string(m)
+          m_parts = name
+                    |> String.downcase()
+                    |> String.split(~r/\W/)
+
+          {[k | :lists.reverse(m_parts)]
+           |> :lists.reverse()
+           |> Enum.join("_")
+           |> String.to_atom(), v}
+        end)
+      end)
+    end
+  end
 end
 
 :code.delete StringNaming.H

@@ -46,6 +46,31 @@ iex|2 ▶ StringNaming.AnimalSymbols.monkey
 "🐒"
 ```
 
+## Changelog
+
+#### `0.4.0`
+
+Added `StringNaming.graphemes/1` function that receives a regular expression and
+returns the list of matched characters:
+
+```elixir
+iex> StringNaming.graphemes ~r/\Aspace/i
+[
+  space_medium_mathematical_space: " ",
+  spaces_em_quad: " ",
+  spaces_em_space: " ",
+  spaces_en_quad: " ",
+  spaces_en_space: " ",
+  spaces_figure_space: " ",
+  spaces_four_per_em_space: " ",
+  spaces_hair_space: " ",
+  spaces_punctuation_space: " ",
+  spaces_six_per_em_space: " ",
+  spaces_thin_space: " ",
+  spaces_three_per_em_space: " "
+]
+```
+
 ## Is it of any good?
 
 Sure it is.

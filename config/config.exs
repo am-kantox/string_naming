@@ -966,8 +966,8 @@ config :string_naming, categories:
       #SogdianLetters
       =SoundSymbols
       #SouthPiceneLetter
-      =Space
-      =Spaces
+      Space
+      Spaces
       #SpacingAccentMarks
       #SpacingClonesOfDiacritics
       =SpadesOrSwords
