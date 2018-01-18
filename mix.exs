@@ -3,6 +3,7 @@ defmodule StringNaming.Mixfile do
 
   @app :string_naming
   @version "0.5.0"
+  @app_name "StringNaming"
 
   def project do
     [
