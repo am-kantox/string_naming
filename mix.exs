@@ -46,4 +46,5 @@ defmodule StringNaming.Mixfile do
       source_url: "https://github.com/am-kantox/#{@app}"
       # extras: [ "stuff/pages/intro.md" ],
     ]
+  end
 end
