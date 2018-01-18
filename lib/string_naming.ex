@@ -236,5 +236,5 @@ defmodule StringNaming do
   end
 end
 
-:code.delete StringNaming.H
 :code.purge StringNaming.H
+:code.delete StringNaming.H
