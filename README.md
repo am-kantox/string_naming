@@ -48,6 +48,10 @@ iex|2 ▶ StringNaming.AnimalSymbols.monkey
 
 ## Changelog
 
+#### `0.6.0` 
+
+Updated `NamesList.txt` (v9 → v13)
+
 #### `0.4.0`
 
 Added `StringNaming.graphemes/1` function that receives a regular expression and

@@ -2,7 +2,7 @@ defmodule StringNaming.Mixfile do
   use Mix.Project
 
   @app :string_naming
-  @version "0.5.0"
+  @version "0.6.0"
   @app_name "StringNaming"
 
   def project do
