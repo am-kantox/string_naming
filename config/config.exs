@@ -120,15 +120,15 @@ config :string_naming, categories: ~w|
       #AribCompatibilityIdeographs
       #ArmenianLigatures
 
-      #ArrowTails
-      #Arrowheads
-      #Arrows
-      #ArrowsCombinedWithOperators
-      #ArrowsCombinedWithRelations
-      #ArrowsWithBentTips
-      #ArrowsWithEquilateralTriangleArrowheads
-      #ArrowsWithModifications
-      #ArrowsWithTriangleArrowheads
+      ArrowTails
+      Arrowheads
+      Arrows
+      ArrowsCombinedWithOperators
+      ArrowsCombinedWithRelations
+      ArrowsWithBentTips
+      ArrowsWithEquilateralTriangleArrowheads
+      ArrowsWithModifications
+      ArrowsWithTriangleArrowheads
 
       #Articulation
       AsciiDigits
@@ -163,12 +163,12 @@ config :string_naming, categories: ~w|
       =BeverageSymbols
       =BiblicalEditorialSymbol
 
-      =BlackArrow
-      =BlackCircles
-      =BlackCurvedArrows
-      =BlackDiamonds
-      =BlackLozenges
-      =BlackSquares
+      BlackArrow
+      BlackCircles
+      BlackCurvedArrows
+      BlackDiamonds
+      BlackLozenges
+      BlackSquares
 
       #BlockElements
       =BodyShapes
@@ -223,25 +223,25 @@ config :string_naming, categories: ~w|
       #ChukchiLetters
       #ChuvashLetters
 
-      =Circle
-      =CircleSuitTiles
-      =CircleSymbols
-      =CircleVowels
-      =CircledArrows
+      Circle
+      CircleSuitTiles
+      CircleSymbols
+      CircleVowels
+      CircledArrows
       #CircledHangulLetters
       #CircledHangulSyllable
       #CircledHangulSyllables
       #CircledIdeographs
       #CircledIdeographsFromAribStdB24
-      =CircledItalicLatinLetters
+      CircledItalicLatinLetters
       #CircledKatakana
       #CircledKoreanWords
       CircledLatinLetterSequences
       CircledLatinLetters
       CircledNumbers
       #CircledNumbersOnBlackSquaresFromAribStdB24
-      #CircledSansSerifDigits
-      #Circles
+      CircledSansSerifDigits
+      Circles
 
       #CjkAngleBrackets
       #CjkBrackets
@@ -274,7 +274,7 @@ config :string_naming, categories: ~w|
       =ComplexSigns
       =ComplexSignsWithVaseShapes
       #CompoundVowels
-      =CompressedArrows
+      CompressedArrows
       =ComputerSymbols
       #ConjunctionAndLengthMarks
       #Consonant
@@ -345,8 +345,8 @@ config :string_naming, categories: ~w|
       =DigitsMinusHalf
       =Digrams
       =Digraphs
-      =DingbatArrow
-      =DingbatArrows
+      DingbatArrow
+      DingbatArrows
       DingbatCircledDigits
       #DivisionOperator
       #DotReph
@@ -354,9 +354,9 @@ config :string_naming, categories: ~w|
       #DottedCircleVowels
       #DottedToneLetters
 
-      =DoubleArrows
+      DoubleArrows
       =DoubleBarbedHarpoons
-      =DoubleCircledNumbers
+      DoubleCircledNumbers
       DoubleDiacritic
       DoubleDiacriticMarkForUpa
       DoubleDiacritics
@@ -442,7 +442,7 @@ config :string_naming, categories: ~w|
       #FinalsForCreeAndOjibway
       #FinalsForDeneAndCarrier
       #FingerMovementIndicators
-      =FingerPostArrows
+      FingerPostArrows
       =FishTails
       #FivePointedStars
       #FiveSpokedAsterisks
@@ -544,7 +544,7 @@ config :string_naming, categories: ~w|
       HeartSymbols
       =HeartsOrCups
       =HeavyArrowShafts
-      =HeavyArrows
+      HeavyArrows
       =HeavyVariantsOfArithmeticSymbols
       #HebrewLetterlikeMathSymbols
       #HebrewPresentationForms
@@ -619,9 +619,9 @@ config :string_naming, categories: ~w|
       #KatakanaLetters
       KatakanaPunctuation
       =KeyboardAndUiSymbols
-      =KeyboardSymbol
-      =KeyboardSymbols
-      =KeyboardSymbolsAndCircleArrows
+      KeyboardSymbol
+      KeyboardSymbols
+      KeyboardSymbolsAndCircleArrows
       =KeyboardSymbolsFromIso99957
       #KhamtiShanConsonants
       #KhamtiShanLogograms
@@ -680,7 +680,7 @@ config :string_naming, categories: ~w|
       =Logograms
       =Logographs
       #LogographsForClanNames
-      =LongArrows
+      LongArrows
       #LoopedSymbols
       #LowAffixes
       #LowercaseClaudianLetter
@@ -702,10 +702,10 @@ config :string_naming, categories: ~w|
       =Marks
       =MarksAndSigns
       =MarksOfNasalization
-      #MathematicalArrows
-      #MathematicalBrackets
-      #MathematicalOperator
-      #MathematicalOperators
+      MathematicalArrows
+      MathematicalBrackets
+      MathematicalOperator
+      MathematicalOperators
       #MayanistAdditions
       =MeasurementSymbol
       =Measures
@@ -728,11 +728,11 @@ config :string_naming, categories: ~w|
       #Miscellaneous
       #MiscellaneousAddition
       #MiscellaneousAdditions
-      #MiscellaneousArrow
-      #MiscellaneousArrowSymbol
-      #MiscellaneousArrows
-      #MiscellaneousArrowsAndKeyboardSymbols
-      #MiscellaneousCurvedArrows
+      MiscellaneousArrow
+      MiscellaneousArrowSymbol
+      MiscellaneousArrows
+      MiscellaneousArrowsAndKeyboardSymbols
+      MiscellaneousCurvedArrows
       #MiscellaneousLargeOperators
       #MiscellaneousMark
       #MiscellaneousMarks
@@ -774,7 +774,7 @@ config :string_naming, categories: ~w|
       #NlNomesOfLowerEgypt
       #NonEuropeanAndHistoricLatin
       #NonJoiningConsonants
-      #NotchedArrows
+      NotchedArrows
       #Noteheads
       #Notes
       #NuNomesOfUpperEgypt
@@ -916,7 +916,7 @@ config :string_naming, categories: ~w|
       #RythmikaRhythmics
       #SCrownsDressStavesEtc
       #Saltires
-      #SansSerifArrows
+      SansSerifArrows
       #SansSerifBoldDigits
       #SansSerifBoldGreekSymbols
       #SansSerifBoldItalicGreekSymbols
@@ -951,8 +951,8 @@ config :string_naming, categories: ~w|
       #SignsForSindhi
       #SignsForYajurvedic
       #SignsUsedInSanskrit
-      =SimpleArrows
-      =SimpleSigns
+      SimpleArrows
+      SimpleSigns
       #SindhiImplosives
       #SixPointedStars
       #SixSpokedAsterisks
@@ -981,8 +981,8 @@ config :string_naming, categories: ~w|
       #SpecificSymbolForControlCode
       SpecificSymbolsForSpace
       SportSymbols
-      =SquareSymbols
-      =SquaredArrows
+      SquareSymbols
+      SquaredArrows
       #SquaredHiraganaFromAribStdB24
       #SquaredIdeographs
       #SquaredIdeographsAndKanaFromAribStdB24
@@ -1141,16 +1141,16 @@ config :string_naming, categories: ~w|
       #TransliterationLetter
       #TransliterationSubjoinedSigns
       #Tremolos
-      #TriangleHeadedArrows
+      TriangleHeadedArrows
       #TriangleHeadedArrowsWithBentTips
       #TriangleHeadedArrowsWithDifferentShaftWeights
       #TriangleHeadedUShapedArrows
-      #TriangleSymbols
+      TriangleSymbols
       Trumps
       =TurnedDigits
       #TwelvePointedStars
       #TwelveStrokeComponents
-      #TwoHeadedArrowSymbols
+      TwoHeadedArrowSymbols
       #TwoPartDependentVowelSigns
       #TwoStrokeComponents
       #Twos
@@ -1200,23 +1200,23 @@ config :string_naming, categories: ~w|
       WeatherSymbol
       WeatherSymbols
       #WeatherSymbolsFromAribStdB24
-      =WhiteAndBlackArrows
+      WhiteAndBlackArrows
       #WhiteArrowShafts
-      =WhiteArrowsAndKeyboardSymbols
-      =WhiteCircles
+      WhiteArrowsAndKeyboardSymbols
+      WhiteCircles
       =WhiteCirclesContainingAnotherBlackCircle
       =WhiteDiamondsContainingAnotherBlackDiamond
       #WhiteLozengeContainingAnotherBlackLozenge
-      =WhiteOnBlackCircledLatinLetters
-      =WhiteOnBlackCircledNumbers
-      =WhiteOnBlackSquaredLatinLetters
-      =WhiteSquares
-      =WhiteSquaresContainingAnotherBlackSquare
+      WhiteOnBlackCircledLatinLetters
+      WhiteOnBlackCircledNumbers
+      WhiteOnBlackSquaredLatinLetters
+      WhiteSquares
+      WhiteSquaresContainingAnotherBlackSquare
       #WideHeadedBarbArrows
-      =WordLigature
-      =WordLigatureSymbols
-      =WordLigatures
-      =WordsWithArrows
+      WordLigature
+      WordLigatureSymbols
+      WordLigatures
+      WordsWithArrows
       #XLoavesAndCakes
       #YWritingsGamesMusic
       #YiRadicals
@@ -1225,7 +1225,7 @@ config :string_naming, categories: ~w|
       #YijingMonogramAndDigramSymbols
       #YijingTrigramSymbols
       #ZStrokesSignsDerivedFromHieraticGeometricalFigures
-      =Zeroes
+      Zeroes
       ZodiacalSymbol
       ZodiacalSymbols
     |
