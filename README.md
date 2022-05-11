@@ -6,7 +6,7 @@
 
 ```elixir
 def deps do
-  [{:string_naming, "~> 0.3"}]
+  [{:string_naming, "~> 0.7"}]
 end
 ```
 
@@ -48,7 +48,15 @@ iex|2 ▶ StringNaming.AnimalSymbols.monkey
 
 ## Changelog
 
-#### `0.6.0` 
+#### `0.7.0` 
+
+**¡NB!** for Elixir < v1.10, use `v0.6.0`
+
+* Added all ASCII set
+* Allowed grepping by functions
+* Updated `NamesList.txt` (v13 → v14)
+
+#### `0.6.0`
 
 Updated `NamesList.txt` (v9 → v13)
 
