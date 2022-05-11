@@ -2,14 +2,13 @@ defmodule StringNaming.Mixfile do
   use Mix.Project
 
   @app :string_naming
-  @version "0.6.0"
-  @app_name "StringNaming"
+  @version "0.7.0"
 
   def project do
     [
       app: @app,
       version: @version,
-      elixir: "~> 1.4",
+      elixir: "~> 1.10",
       start_permanent: Mix.env == :prod,
       description: description(),
       package: package(),
@@ -31,7 +30,7 @@ defmodule StringNaming.Mixfile do
   defp package do
     [
      name: @app,
-     files: ~w|lib mix.exs README.md|,
+     files: ~w|config lib mix.exs README.md|,
      maintainers: ["Aleksei Matiushkin"],
      licenses: ["MIT"],
      links: %{"GitHub" => "https://github.com/am-kantox/#{@app}",
@@ -40,7 +39,7 @@ defmodule StringNaming.Mixfile do
 
   defp docs() do
     [
-      main: @app_name,
+      main: "StringNaming",
       source_ref: "v#{@version}",
       canonical: "http://hexdocs.pm/#{@app}",
       # logo: "stuff/images/logo.png",

@@ -1,6 +1,6 @@
 # This file is responsible for configuring your application
 # and its dependencies with the aid of the Mix.Config module.
-use Mix.Config
+import Config
 
 config :string_naming, categories:
   ~w|
@@ -28,9 +28,9 @@ config :string_naming, categories:
       #AdditionalConsonant
       #AdditionalConsonants
       #AdditionalDependentVowelSigns
-      #AdditionalDiacriticalMarkForSymbols
-      #AdditionalDiacriticalMarksForSymbols
-      #AdditionalEnclosingDiacritics
+      AdditionalDiacriticalMarkForSymbols
+      AdditionalDiacriticalMarksForSymbols
+      AdditionalEnclosingDiacritics
       #AdditionalHistoricVowel
       #AdditionalItalicGreekSymbols
       #AdditionalLetter
@@ -41,7 +41,7 @@ config :string_naming, categories:
       #AdditionalLettersForOssetianAndAbkhaz
       #AdditionalMarksForUpa
       #AdditionalNasalVowels
-      #AdditionalPunctuation
+      AdditionalPunctuation
       #AdditionalSansSerifBoldGreekSymbols
       #AdditionalSansSerifBoldItalicGreekSymbols
       #AdditionalSigns
@@ -79,7 +79,7 @@ config :string_naming, categories:
       #AleutLetters
       #AlloioseisDifferentiators
       #AlternateConsonantFormsForChinese
-      #AlternateFormsOfPunctuation
+      AlternateFormsOfPunctuation
       #AlternateLetters
       #AlternateVowelSigns
       #AmpersandAndLigatureEtOrnaments
@@ -113,7 +113,7 @@ config :string_naming, categories:
       #ArchaicLettersForEwe
       #ArchaicLettersForVolapK
       #ArchaicLowercaseSyllable
-      #ArchaicPunctuation
+      ArchaicPunctuation
       #ArchaicRomanNumerals
       #ArchaicUppercaseSyllable
       #Ardhavisarga
@@ -132,8 +132,9 @@ config :string_naming, categories:
       #ArrowsWithTriangleArrowheads
 
       #Articulation
-      #AsciiDigits
-      #AsciiPunctuationAndSymbols
+      AsciiDigits
+      AsciiPunctuation
+      AsciiPunctuationAndSymbols
       =AstrologicalDigits
       =AstrologicalSigns
       =AstrologicalSymbols
@@ -219,7 +220,7 @@ config :string_naming, categories:
       ChessSymbols
       #ChilluLetters
       #ChinantecToneMarks
-      #ChinookPunctuation
+      ChinookPunctuation
       #ChukchiLetters
       #ChuvashLetters
 
@@ -249,7 +250,7 @@ config :string_naming, categories:
       #CjkRadicalsSupplement
       #CjkStrokes
       #CjkSymbols
-      #CjkSymbolsAndPunctuation
+      CjkSymbolsAndPunctuation
       #ClaudianLetters
       #Clef
       #Clefs
@@ -257,8 +258,8 @@ config :string_naming, categories:
       ClothingAndAccessories
       =ClubsOrWands
       #Codas
-      #CombiningDiacriticalMarks
-      #CombiningDiacriticalMarksForSymbols
+      CombiningDiacriticalMarks
+      CombiningDiacriticalMarksForSymbols
       #CombiningHalfMarks
       #CombiningHalfMarksBelow
       #CombiningLetters
@@ -327,11 +328,11 @@ config :string_naming, categories:
       #DeprecatedAngleBrackets
       #DeprecatedIndependentVowelsForTransliteration
       #DeprecatedLetter
-      #DiacriticForAmericanLexicography
-      #DiacriticalMarks
-      #DiacriticalMarksForMusicalSymbols
-      #Diacritics
-      #DiacriticsForVisarga
+      DiacriticForAmericanLexicography
+      DiacriticalMarks
+      DiacriticalMarksForMusicalSymbols
+      Diacritics
+      DiacriticsForVisarga
       #DiagonalLineVowels
       #DialectNonMandarinLetters
       =Diamonds
@@ -340,7 +341,7 @@ config :string_naming, categories:
       Dice
       DictionaryAndMapSymbols
       =DictionaryAndMapSymbolsFromAribStdB24
-      =DictionaryPunctuation
+      DictionaryPunctuation
       =Digits
       =DigitsMinusHalf
       =Digrams
@@ -357,12 +358,12 @@ config :string_naming, categories:
       =DoubleArrows
       =DoubleBarbedHarpoons
       =DoubleCircledNumbers
-      #DoubleDiacritic
-      #DoubleDiacriticMarkForUpa
-      #DoubleDiacritics
+      DoubleDiacritic
+      DoubleDiacriticMarkForUpa
+      DoubleDiacritics
       =DoubleHyphen
       =DoubleLines
-      =DoublePunctuationForVerticalText
+      DoublePunctuationForVerticalText
       =DoubleStruckDigits
       =DoubleStruckItalicMathSymbols
       =DoubleStruckLargeOperator
@@ -398,7 +399,7 @@ config :string_naming, categories:
       Emoticons
       =EmptySets
       #EnclosedAlphanumericSymbols
-      #EnclosingDiacritics
+      EnclosingDiacritics
       EntertainmentSymbols
       =ErrorBarSymbols
       #EuropeanLatin
@@ -487,9 +488,9 @@ config :string_naming, categories:
       =GenderSymbol
       =GenderSymbols
       =GenealogicalSymbols
-      =GeneralPunctuation
-      #GenericPunctuationForPhilippineScripts
-      #GenericPunctuationForScriptsOfIndia
+      GeneralPunctuation
+      GenericPunctuationForPhilippineScripts
+      GenericPunctuationForScriptsOfIndia
       =GeometricShapes
       =GeometricSymbols
       =GestureSymbols
@@ -498,7 +499,7 @@ config :string_naming, categories:
       #GlyphPart
       #GlyphsForContextualFormsOfLettersForCentralAsianLanguages
       #GlyphsForContextualFormsOfLettersForPersianUrduSindhiEtc
-      #GlyphsForSpacingFormsOfArabicPoints
+      GlyphsForSpacingFormsOfArabicPoints
       #GlyphsForVerticalVariants
       GoMarkers
       =GoldenNumberRunes
@@ -518,7 +519,7 @@ config :string_naming, categories:
       #HSymbols
       =HalfBrackets
       =HalfCircles
-      #HalfwidthCjkPunctuation
+      HalfwidthCjkPunctuation
       #HalfwidthHangulVariants
       #HalfwidthKatakanaVariants
       =HalfwidthSymbolVariants
@@ -561,7 +562,7 @@ config :string_naming, categories:
       #HistoricLettersForSakhaYakut
       #HistoricMiscellaneous
       #HistoricPhoneticVariants
-      #HistoricPunctuation
+      HistoricPunctuation
       #HistoricSyllables
       #HistoricSymbolsForFractionalValues
       #HistoricalDigits
@@ -596,7 +597,7 @@ config :string_naming, categories:
       #InvocationSigns
       #IotaSubscript
       #IpaCharactersForDisorderedSpeech
-      #IpaDiacriticsForDisorderedSpeech
+      IpaDiacriticsForDisorderedSpeech
       #IpaExtensions
       #IpaModifiers
       #IsolatedSymbols
@@ -617,7 +618,7 @@ config :string_naming, categories:
       #KangxiRadicals
       #KatakanaDigraph
       #KatakanaLetters
-      #KatakanaPunctuation
+      KatakanaPunctuation
       =KeyboardAndUiSymbols
       =KeyboardSymbol
       =KeyboardSymbols
@@ -633,7 +634,7 @@ config :string_naming, categories:
       #KurdishLetters
       #LInvertabrataAndLesserAnimals
       =LargeOperators
-      #Latin1PunctuationAndSymbols
+      Latin1PunctuationAndSymbols
       #LatinExtensionsForVietnamese
       #LatinGeneralExtensions
       #LatinGeneralUseExtensions
@@ -713,7 +714,7 @@ config :string_naming, categories:
       #Medials
       =MedicalAndHealingSymbols
       MedicalSymbols
-      #MedievalSuperscriptLetterDiacritics
+      MedievalSuperscriptLetterDiacritics
       #MedievalistAddition
       #MedievalistAdditions
       #MelodimataMelodics
@@ -741,7 +742,7 @@ config :string_naming, categories:
       #MiscellaneousMathematicalSymbol
       #MiscellaneousMathematicalSymbols
       #MiscellaneousPhoneticModifiers
-      #MiscellaneousPunctuation
+      MiscellaneousPunctuation
       #MiscellaneousSign
       #MiscellaneousSymbol
       #MiscellaneousSymbolFromAribStdB24
@@ -759,8 +760,8 @@ config :string_naming, categories:
       #Modifiers
       MoneySymbols
       #Monogram
-      MonospaceDigits
-      MonospaceSymbols
+      +MonospaceDigits
+      +MonospaceSymbols
       =MoonSunAndStarSymbols
       #MordvinLetters
       #MovementIndicators
@@ -802,13 +803,13 @@ config :string_naming, categories:
       #OldInitialConsonants
       #OldMedialVowels
       #OldNubianLetters
-      #OldNubianPunctuation
+      OldNubianPunctuation
       #OldVowelLetters
       #OneStrokeComponents
       #Ones
       #Operator
       #Operators
-      #OrdinaryDiacritics
+      OrdinaryDiacritics
       #OrnamentalBrackets
       #Ornamentation
       #Ornaments
@@ -816,7 +817,7 @@ config :string_naming, categories:
       #OrthographicLatinAdditions
       #OrthographicLettersForGlottals
       #OscanLetters
-      #OtherCjkPunctuation
+      OtherCjkPunctuation
       #OtherCjkSymbols
       #OtherCombiningMarks
       #OtherLetter
@@ -826,12 +827,12 @@ config :string_naming, categories:
       #OtherPhoneticSymbols
       #OtherVowels
       #OverscoresAndUnderscores
-      #OverstruckDiacritics
+      OverstruckDiacritics
       #PShipsAndPartsOfShips
       #PaOKarenToneMark
       #PairedArrowsAndHarpoons
       #PairedHarpoons
-      #PairedPunctuation
+      PairedPunctuation
       #PairedTriangleHeadedArrows
       #PakistaniQuranicMarks
       #PalaeotypeTransliterationSymbol
@@ -852,14 +853,14 @@ config :string_naming, categories:
       #PhoneticAndHistoricLetters
       #PhoneticExtensionsForAinu
       #PhoneticSymbol
-      #PinyinDiacriticVowelCombinations
+      PinyinDiacriticVowelCombinations
       PlantSymbols
       PlayingCardSymbols
       =PlusAndMinusSignOperators
       =PoeticMarks
       =PoetryMarks
       =PointingHandSymbols
-      =PointsAndPunctuation
+      PointsAndPunctuation
       =PortraitAndRoleSymbols
       =PositioningToneMarks
       #PowerSymbolFromIeee16212004
@@ -869,11 +870,11 @@ config :string_naming, categories:
       #Processes
       #PronunciationVariantsFromKsX10011998
       #ProsodiesProsodics
-      #PunctaExtraordinaria
-      #Punctuation
-      #PunctuationForTibetan
-      #PunctuationMark
-      #PunctuationMarkOrnaments
+      PunctaExtraordinaria
+      Punctuation
+      PunctuationForTibetan
+      PunctuationMark
+      PunctuationMarkOrnaments
       #QDomesticAndFuneraryFurniture
       #QuarterArcConsonantsWrittenDownwards
       #QuarterArcConsonantsWrittenUpwards
@@ -901,7 +902,7 @@ config :string_naming, categories:
       #ReplacementCharacters
       #Rest
       #Rests
-      #ReversedPunctuation
+      ReversedPunctuation
       =RibbonArrows
       #RocketOrnaments
       =RoleSymbol
@@ -968,8 +969,8 @@ config :string_naming, categories:
       #SouthPiceneLetter
       Space
       Spaces
-      #SpacingAccentMarks
-      #SpacingClonesOfDiacritics
+      SpacingAccentMarks
+      SpacingClonesOfDiacritics
       =SpadesOrSwords
       #Special
       #SpecialCharacter
@@ -979,7 +980,7 @@ config :string_naming, categories:
       #SpecializedPlusSignOperators
       #Specials
       #SpecificSymbolForControlCode
-      #SpecificSymbolsForSpace
+      SpecificSymbolsForSpace
       SportSymbols
       =SquareSymbols
       =SquaredArrows
@@ -1012,7 +1013,7 @@ config :string_naming, categories:
       #SubtendingMarks
       #SummationSignParts
       #SummationsAndIntegrals
-      #SuperscriptLetterDiacriticsForGermanDialectology
+      SuperscriptLetterDiacriticsForGermanDialectology
       #Superscripts
       #SupertendingMark
       #SupplementaryCapitalLetters
@@ -1083,7 +1084,7 @@ config :string_naming, categories:
       #SyriacLetters
       #SyriacMarks
       #SyriacPointsVowels
-      #SyriacPunctuationAndSigns
+      SyriacPunctuationAndSigns
       #TWarfareHuntingButchery
       #Tablature
       #TacksAndTurnstiles

@@ -58,7 +58,7 @@ defmodule StringNaming do
 
   """
 
-  @categories Application.get_env(:string_naming, :categories)
+  @categories Application.compile_env(:string_naming, :categories)
 
   data_path = Path.join([__DIR__, "string_naming", "unicode", "NamesList.txt"])
 
@@ -87,8 +87,9 @@ defmodule StringNaming do
   end
   @selected @categories
             |> Enum.filter(fn
-                  <<"#" :: binary, _ :: binary>> -> false
-                  <<"=" :: binary, _ :: binary>> -> false
+                  <<"#", _ :: binary>> -> false
+                  <<"=", _ :: binary>> -> false
+                  <<"+", _ :: binary>> -> false
                   _ -> true
                end)
             |> Enum.map(& underscore.(&1))
@@ -106,14 +107,15 @@ defmodule StringNaming do
       [category, names, props]
     <<"@" :: binary, _ :: binary>>, acc -> acc
     <<"\t" :: binary, rest :: binary>>, acc -> extract_prop.(rest, acc)
-    code_name, [category, _, _] = acc ->
-      if "" == category do
-        acc
-      else
-        with [code, name] <- :binary.split(code_name, "\t") do
-          extract_name.(code, name, acc)
-        end
+    code_name, [category, _, _] = acc when category != "" ->
+      with [code, name] <- :binary.split(code_name, "\t") do
+        extract_name.(code, name, acc)
       end
+    <<"00", _ :: binary-size(2), "\t", _ :: binary>> = code_name, [_, names, props] ->
+      with [code, name] <- :binary.split(code_name, "\t") do
+        extract_name.(code, name, ["ascii", names, props])
+      end
+    _, acc -> acc
   end
 
   names_tree = Enum.reduce(names, %{}, fn {code, name, category}, acc ->
@@ -208,29 +210,30 @@ defmodule StringNaming do
 
 
   """
-  def graphemes(%Regex{} = filter) do
+  def graphemes(%Regex{} = filter, modules_only? \\ true) do
     with {:ok, modules} <- :application.get_key(:string_naming, :modules) do
       modules
       |> Enum.filter(fn m ->
-        case to_string(m) do
-          <<"Elixir.StringNaming." :: binary, name :: binary>> -> Regex.match?(filter, name)
+        case {modules_only?, to_string(m)} do
+          {false, _} -> match?({:module, ^m}, Code.ensure_loaded(m)) and function_exported?(m, :__all__, 0)
+          {_, <<"Elixir.StringNaming." :: binary, name :: binary>>} -> Regex.match?(filter, name)
           _ -> false
         end
       end)
       |> Enum.flat_map(fn m ->
         m
         |> apply(:__all__, [])
-        |> Enum.map(fn {k, v} ->
+        |> Enum.reduce([], fn {k, v}, acc ->
           <<"Elixir.StringNaming." :: binary, name :: binary>> = to_string(m)
-          m_parts = name
-                    |> String.downcase()
-                    |> String.split(~r/\W/)
-
-          {[k | :lists.reverse(m_parts)]
-           |> :lists.reverse()
-           |> Enum.join("_")
-           |> String.to_atom(), v}
+          name =
+            name
+            |> String.downcase()
+            |> String.split(~r/\W/)
+            |> Kernel.++([k])
+            |> Enum.join("_")
+          if Regex.match?(filter, name), do: [{String.to_atom(name), v} | acc], else: acc
         end)
+        |> Enum.reverse()
       end)
     end
   end
