@@ -9,7 +9,7 @@ defmodule StringNaming.Mixfile do
       app: @app,
       version: @version,
       elixir: "~> 1.10",
-      start_permanent: Mix.env == :prod,
+      start_permanent: Mix.env() == :prod,
       description: description(),
       package: package(),
       deps: deps(),
@@ -19,7 +19,7 @@ defmodule StringNaming.Mixfile do
 
   def application, do: []
 
-  defp deps, do: [ {:ex_doc, ">= 0.0.0", only: :dev} ]
+  defp deps, do: [{:ex_doc, ">= 0.0.0", only: :dev}]
 
   defp description do
     """
@@ -29,12 +29,15 @@ defmodule StringNaming.Mixfile do
 
   defp package do
     [
-     name: @app,
-     files: ~w|config lib mix.exs README.md|,
-     maintainers: ["Aleksei Matiushkin"],
-     licenses: ["MIT"],
-     links: %{"GitHub" => "https://github.com/am-kantox/#{@app}",
-              "Docs" => "https://hexdocs.pm/#{@app}"}]
+      name: @app,
+      files: ~w|config lib mix.exs README.md|,
+      maintainers: ["Aleksei Matiushkin"],
+      licenses: ["MIT"],
+      links: %{
+        "GitHub" => "https://github.com/am-kantox/#{@app}",
+        "Docs" => "https://hexdocs.pm/#{@app}"
+      }
+    ]
   end
 
   defp docs() do

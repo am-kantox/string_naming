@@ -1,36 +1,44 @@
 defmodule StringNaming.H do
   def nested_module(mod, children) do
-    [funs, mods] = Enum.reduce(children, [%{}, %{}], fn
-      {k, v}, [funs, mods] when is_binary(v) -> [Map.put(funs, k, v), mods]
-      {k, v}, [funs, mods] -> [funs, Map.put(mods, k, v)]
-    end)
+    [funs, mods] =
+      Enum.reduce(children, [%{}, %{}], fn
+        {k, v}, [funs, mods] when is_binary(v) -> [Map.put(funs, k, v), mods]
+        {k, v}, [funs, mods] -> [funs, Map.put(mods, k, v)]
+      end)
 
-    ast = for {name, value} <- funs do
-      name = name |> String.replace(~r/\A(\d)/, "N_\\1") |> Macro.underscore |> String.to_atom
-      quote do: def unquote(name)(), do: <<String.to_integer(unquote(value), 16)::utf8>>
-    end ++
-    [
-      quote do
-        def __all__ do
-          :functions
-          |> __MODULE__.__info__()
-          |> Enum.map(fn
-              {:__all__, 0} -> nil
-              {k, 0} -> {k, apply(__MODULE__, k, [])}
-              _ -> nil
-          end)
-          |> Enum.filter(& &1)
-        end
-      end
-    ]
+    ast =
+      for {name, value} <- funs do
+        name =
+          name |> String.replace(~r/\A(\d)/, "N_\\1") |> Macro.underscore() |> String.to_atom()
+
+        quote do: def(unquote(name)(), do: <<String.to_integer(unquote(value), 16)::utf8>>)
+      end ++
+        [
+          quote do
+            def __all__ do
+              :functions
+              |> __MODULE__.__info__()
+              |> Enum.map(fn
+                {:__all__, 0} -> nil
+                {k, 0} -> {k, apply(__MODULE__, k, [])}
+                _ -> nil
+              end)
+              |> Enum.filter(& &1)
+            end
+          end
+        ]
+
     Module.create(Module.concat(mod), ast, Macro.Env.location(__ENV__))
     StringNaming.H.nesteds(mod, mods)
   end
 
   def nesteds(nested \\ [], map_or_code)
+
   def nesteds(nested, %{} = map) do
     Enum.each(map, fn
-      {_key, code} when is_binary(code) -> :ok
+      {_key, code} when is_binary(code) ->
+        :ok
+
       {k, v} ->
         mod = :lists.reverse([k | :lists.reverse(nested)])
         StringNaming.H.nested_module(mod, v)
@@ -69,69 +77,92 @@ defmodule StringNaming do
   	x (inverted exclamation mark - 00A1)
   	x (latin letter retroflex click - 01C3)
   """
+
   extract_prop = fn
     _rest, [_category, _names, _props] = acc ->
       # TODO make properties available as well
       # IO.inspect rest, label: "★ property"
       acc
   end
+
   underscore = fn name ->
     name
-    |> String.trim
+    |> String.trim()
     |> String.replace(~r/\A(\d)/, "N_\\1")
     |> String.replace(~r/[^A-Za-z\d_ ]/, " ")
     |> String.split(" ")
-    |> Enum.filter(& &1 != "")
+    |> Enum.filter(&(&1 != ""))
     |> Enum.join("_")
     |> Macro.underscore()
   end
+
   @selected @categories
             |> Enum.filter(fn
-                  <<"#", _ :: binary>> -> false
-                  <<"=", _ :: binary>> -> false
-                  <<"+", _ :: binary>> -> false
-                  _ -> true
-               end)
-            |> Enum.map(& underscore.(&1))
+              <<"#", _::binary>> -> false
+              <<"=", _::binary>> -> false
+              <<"+", _::binary>> -> false
+              _ -> true
+            end)
+            |> Enum.map(&underscore.(&1))
   extract_name = fn
-    _, <<"<" :: binary, _ :: binary>>, [_category, _names, _props] = acc -> acc
+    _, <<"<"::binary, _::binary>>, [_category, _names, _props] = acc ->
+      acc
+
     code, name, [category, names, props] ->
       [category, [{code, underscore.(name), category} | names], props]
   end
 
-  [_category, names, _props] = Enum.reduce File.stream!(data_path), ["Unknown", [], %{}], fn
-    <<";" :: binary, _ :: binary>>, acc -> acc
-    <<"@\t" :: binary, category :: binary>>, [_, names, props] ->
-      category = underscore.(category)
-      category = if Enum.member?(@selected, category), do: category, else: ""
-      [category, names, props]
-    <<"@" :: binary, _ :: binary>>, acc -> acc
-    <<"\t" :: binary, rest :: binary>>, acc -> extract_prop.(rest, acc)
-    code_name, [category, _, _] = acc when category != "" ->
-      with [code, name] <- :binary.split(code_name, "\t") do
-        extract_name.(code, name, acc)
-      end
-    <<"00", _ :: binary-size(2), "\t", _ :: binary>> = code_name, [_, names, props] ->
-      with [code, name] <- :binary.split(code_name, "\t") do
-        extract_name.(code, name, ["ascii", names, props])
-      end
-    _, acc -> acc
-  end
+  [_category, names, _props] =
+    Enum.reduce(File.stream!(data_path), ["Unknown", [], %{}], fn
+      <<";"::binary, _::binary>>, acc ->
+        acc
 
-  names_tree = Enum.reduce(names, %{}, fn {code, name, category}, acc ->
-    modules = [category | String.split(name, "_")] |> Enum.map(&Macro.camelize/1)
-    {acc, ^modules} = Enum.reduce(modules, {acc, []}, fn
-      key, {acc, keys} ->
-        keys = :lists.reverse([key | :lists.reverse(keys)])
-        {_, result} = get_and_update_in(acc, keys, fn
-          nil -> {nil, %{}}
-          map when is_map(map) -> {map, map}
-          other -> {other, %{}}
-        end)
-        {result, keys}
+      <<"@\t"::binary, category::binary>>, [_, names, props] ->
+        category = underscore.(category)
+        category = if Enum.member?(@selected, category), do: category, else: ""
+        [category, names, props]
+
+      <<"@"::binary, _::binary>>, acc ->
+        acc
+
+      <<"\t"::binary, rest::binary>>, acc ->
+        extract_prop.(rest, acc)
+
+      code_name, [category, _, _] = acc when category != "" ->
+        with [code, name] <- :binary.split(code_name, "\t") do
+          extract_name.(code, name, acc)
+        end
+
+      <<"00", _::binary-size(2), "\t", _::binary>> = code_name, [_, names, props] ->
+        with [code, name] <- :binary.split(code_name, "\t") do
+          extract_name.(code, name, ["ascii", names, props])
+        end
+
+      _, acc ->
+        acc
     end)
-    put_in(acc, modules, code)
-  end)
+
+  names_tree =
+    Enum.reduce(names, %{}, fn {code, name, category}, acc ->
+      modules = [category | String.split(name, "_")] |> Enum.map(&Macro.camelize/1)
+
+      {acc, ^modules} =
+        Enum.reduce(modules, {acc, []}, fn
+          key, {acc, keys} ->
+            keys = :lists.reverse([key | :lists.reverse(keys)])
+
+            {_, result} =
+              get_and_update_in(acc, keys, fn
+                nil -> {nil, %{}}
+                map when is_map(map) -> {map, map}
+                other -> {other, %{}}
+              end)
+
+            {result, keys}
+        end)
+
+      put_in(acc, modules, code)
+    end)
 
   StringNaming.H.nesteds(["StringNaming"], names_tree)
 
@@ -215,22 +246,29 @@ defmodule StringNaming do
       modules
       |> Enum.filter(fn m ->
         case {modules_only?, to_string(m)} do
-          {false, _} -> match?({:module, ^m}, Code.ensure_loaded(m)) and function_exported?(m, :__all__, 0)
-          {_, <<"Elixir.StringNaming." :: binary, name :: binary>>} -> Regex.match?(filter, name)
-          _ -> false
+          {false, _} ->
+            match?({:module, ^m}, Code.ensure_loaded(m)) and function_exported?(m, :__all__, 0)
+
+          {_, <<"Elixir.StringNaming."::binary, name::binary>>} ->
+            Regex.match?(filter, name)
+
+          _ ->
+            false
         end
       end)
       |> Enum.flat_map(fn m ->
         m
         |> apply(:__all__, [])
         |> Enum.reduce([], fn {k, v}, acc ->
-          <<"Elixir.StringNaming." :: binary, name :: binary>> = to_string(m)
+          <<"Elixir.StringNaming."::binary, name::binary>> = to_string(m)
+
           name =
             name
             |> String.downcase()
             |> String.split(~r/\W/)
             |> Kernel.++([k])
             |> Enum.join("_")
+
           if Regex.match?(filter, name), do: [{String.to_atom(name), v} | acc], else: acc
         end)
         |> Enum.reverse()
@@ -239,5 +277,5 @@ defmodule StringNaming do
   end
 end
 
-:code.purge StringNaming.H
-:code.delete StringNaming.H
+:code.purge(StringNaming.H)
+:code.delete(StringNaming.H)
