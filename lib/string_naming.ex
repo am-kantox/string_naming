@@ -172,7 +172,7 @@ defmodule StringNaming do
 
   ## Examples
 
-      iex> StringNaming.graphemes ~r/AnimalFace/
+      iex> StringNaming.graphemes ~r/AnimalFace/i
       [
         animalfaces_bear_face: "🐻",
         animalfaces_cat_face: "🐱",
@@ -223,9 +223,11 @@ defmodule StringNaming do
         fraktursymbols_mathematical_fraktur_small_z: "𝔷"
       ]
 
-      iex> StringNaming.graphemes ~r/\Aspace/i
+      iex> StringNaming.graphemes ~r/\Aspace/i, false
       [
         space_medium_mathematical_space: " ",
+        space_narrow_no_break_space: " ",
+        space_ogham_space_mark: " ",
         spaces_em_quad: " ",
         spaces_em_space: " ",
         spaces_en_quad: " ",
