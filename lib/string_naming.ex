@@ -172,7 +172,7 @@ defmodule StringNaming do
 
   ## Examples
 
-      iex> StringNaming.graphemes ~r/AnimalFace/i
+      iex> StringNaming.graphemes ~r/AnimalFace/
       [
         animalfaces_bear_face: "🐻",
         animalfaces_cat_face: "🐱",
@@ -266,12 +266,13 @@ defmodule StringNaming do
 
           name =
             name
-            |> String.downcase()
             |> String.split(~r/\W/)
             |> Kernel.++([k])
             |> Enum.join("_")
 
-          if Regex.match?(filter, name), do: [{String.to_atom(name), v} | acc], else: acc
+          if Regex.match?(filter, name),
+            do: [{name |> String.downcase() |> String.to_atom(), v} | acc],
+            else: acc
         end)
         |> Enum.reverse()
       end)
