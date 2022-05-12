@@ -48,6 +48,10 @@ iex|2 ▶ StringNaming.AnimalSymbols.monkey
 
 ## Changelog
 
+#### `0.7.3`
+
+Predefined defaults for spaces, digits, and punctuation
+
 #### `0.7.0` 
 
 **¡NB!** for Elixir < v1.10, use `v0.6.0`

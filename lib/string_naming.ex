@@ -66,12 +66,10 @@ defmodule StringNaming do
 
   """
 
-  @categories Application.compile_env(:string_naming, :categories)
-
-  if is_nil(@categories) do
-    raise CompileError,
-          description: "Config parameter `:string_naming, :categories` must be set to a list of categories to parse"
-  end
+  @categories Enum.uniq(
+                StringNaming.Defaults.categories() ++
+                  Application.compile_env(:string_naming, :categories, [])
+              )
 
   data_path = Path.join([__DIR__, "string_naming", "unicode", "NamesList.txt"])
 
