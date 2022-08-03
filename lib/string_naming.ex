@@ -1,4 +1,8 @@
 defmodule StringNaming.H do
+  @moduledoc false
+
+  def moduledoc, do: quote(do: @moduledoc(false))
+
   def nested_module(mod, children) do
     [funs, mods] =
       Enum.reduce(children, [%{}, %{}], fn
@@ -28,7 +32,7 @@ defmodule StringNaming.H do
           end
         ]
 
-    Module.create(Module.concat(mod), ast, Macro.Env.location(__ENV__))
+    Module.create(Module.concat(mod), [moduledoc() | ast], Macro.Env.location(__ENV__))
     StringNaming.H.nesteds(mod, mods)
   end
 
